@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: black;
+    font-family: 'Poppins',sans-serif;
+}
+
+.home{
+    background-color: #121212;
+    color:aliceblue;
+}
+
+.library{
+    background-color: #121212;
+    color: aliceblue;
+    min-height: 80vh;
+    position: relative;
+}
+
+.footer{
+    font-size: 10px;
+    position: absolute;
+    bottom: 0;
+}
+
+.footer a{
+    color: gray;
+}
+
+.main-box{
+    background-color: #121212;
+}
+
+.main-header{
+    background: rgb(34,34,34);
+}
