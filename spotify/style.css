@@ -5,7 +5,12 @@
 
 body{
     background-color: black;
+    color: #fff;
     font-family: 'Poppins',sans-serif;
+}
+
+.container-fluid{
+    overflow-x: hidden;
 }
 
 .home{
@@ -16,7 +21,7 @@ body{
 .library{
     background-color: #121212;
     color: aliceblue;
-    min-height: 80vh;
+    height: 77vh;
     position: relative;
 }
 
@@ -24,6 +29,7 @@ body{
     font-size: 10px;
     position: absolute;
     bottom: 0;
+    display: inline-block;
 }
 
 .footer a{
@@ -32,8 +38,75 @@ body{
 
 .main-box{
     background-color: #121212;
+    border-radius: 5px;
+    position: relative;
 }
 
 .main-header{
     background: rgb(34,34,34);
+    height: 50px;
+    border-radius: 5px 5px 0 0;
+}
+
+.register{
+    /* background-color: #1f1f1f; */
+    color:#e2dede;
+    font-size: 16px;
+}
+
+.register:hover{
+    /* background-color: #121212; */
+    font-size: 17px;
+    color:#fff;
+    cursor: pointer;
+}
+
+.login:hover{
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.card-container{
+    gap: 10px;
+    height: 38vh;
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+
+/* .card-container::-webkit-scrollbar{
+    display: none;
+} */
+
+.spotify-card{
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    position: relative;
+
+}
+
+.spotify-card .image img{
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.play{
+    top: 165px;
+    left: 170px;
+    position: absolute;
+    z-index: 1;
+    background-color: #1abc54;
+    fill: red;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    opacity: 0;
+    transition: all 1s ease-out;
+    /* background: #000; */
+}
+
+.playbar{
+    position: absolute;
+    bottom: 0;
+    background-color: #1abc54;
+    
 }
