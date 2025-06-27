@@ -25,6 +25,34 @@ body{
     position: relative;
 }
 
+.songList ol{
+    overflow-y: scroll;
+    height: 60vh;
+}
+
+.songList li{
+    display:flex;
+    gap: 20px;
+    margin: 5px 0;
+    padding: 5px 5px;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #fff;
+}
+
+.songList .left{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.songList .left .info{
+    margin-left: 10px;
+}
+
+
+
 .footer{
     font-size: 10px;
     position: absolute;
