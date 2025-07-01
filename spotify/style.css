@@ -11,6 +11,7 @@ body{
 
 .container-fluid{
     overflow-x: hidden;
+    /* position: fixed; */
 }
 
 .home{
@@ -28,6 +29,15 @@ body{
 .songList ol{
     overflow-y: scroll;
     height: 60vh;
+    scrollbar-color: pink;
+}
+
+.songList ol::-webkit-scrollbar{
+    width: 1px;
+}
+
+.songList ol::-webkit-scrollbar-thumb{
+    background: gray;
 }
 
 .songList li{
@@ -45,10 +55,11 @@ body{
     display: flex;
     gap: 20px;
     align-items: center;
+    padding: 0 5px;
 }
 
 .songList .left .info{
-    margin-left: 10px;
+    margin-left: 3px;
 }
 
 
@@ -133,8 +144,32 @@ body{
 }
 
 .playbar{
+    position: fixed;
+    bottom: 10px;
+    border-radius: 10px;
+    margin-right: 100px;
+    height: 45px;
+    background-color: rgb(34,34,34);
+}
+
+.seekbar{
+    height: 5px;
+    background: white;
+    width: 96%;
+    border-radius: 10px;
+    /* bottom: 500px; */
+    justify-self: center;
+    /* align-self: center; */
+}
+
+.seekbar .circle{
+    /* height: 3.5px; */
+    /* border: 1px solid red; */
+    bottom: 35px;
+    width: 13px;
+    height: 13px;
+    border-radius: 7px;
+    background-color: white;
     position: absolute;
-    bottom: 0;
-    background-color: #1abc54;
-    
+    transition: left 0.5s;
 }
