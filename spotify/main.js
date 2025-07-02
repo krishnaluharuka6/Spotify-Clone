@@ -1,5 +1,23 @@
 console.log("let's do it!");
 let currentSong = new Audio();
+// playy=document.getElementById("playy");
+
+
+// convert the second to minutes seconds of the song
+function secToMinsec(seconds){
+    if(isNaN(seconds) || seconds <0){
+        return "Invalid input";
+    }
+
+    const minutes=Math.floor(seconds/60);
+    const remainingSeconds=Math.floor(seconds%60);
+
+    const formattedMinutes = String(minutes).padStart(2,'0');
+    const formattedSeconds = String(remainingSeconds).padStart(2,'0');
+
+    return `${formattedMinutes}:${formattedSeconds}`;
+
+}
 
 async function getSongs(){
     let a = await fetch("images/songs/");
@@ -21,15 +39,23 @@ async function getSongs(){
     return songs
 }
 
-const playMusic = (track) =>{
+const playMusic = (track, pause=false) =>{
     // let audio = new Audio("images/songs/" + track);
     currentSong.src = "images/songs/" + track;
-    currentSong.play();
+    if(!pause){
+        currentSong.play();
+        playy.classList.remove("bi-play-circle");
+        playy.classList.add("bi-pause-circle");
+    }
+    document.querySelector(".song-info").innerHTML=decodeURI(track)
+    document.querySelector(".song-time").innerHTML="00:00 / 00:00"
+
 }
 
 async function main(){
     let songs = await getSongs();
     // console.log(songs); //list of songs
+    playMusic(songs[0],true)
 
     let songOL = document.querySelector(".songList").getElementsByTagName("ol")[0];
 
@@ -46,13 +72,41 @@ async function main(){
                             </li>`;
     }
 
-    // Attach a eventlistener to each song
+    // Attach an eventlistener to each song
     Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e=>{
         e.addEventListener("click", element =>{
              console.log(e.querySelector(".info").firstElementChild.innerHTML);
-             playMusic(e.querySelector(".info").firstElementChild.innerHTML)
+             playMusic(e.querySelector(".info").firstElementChild.innerHTML);
         })
     });
+
+    // Attach an event listener to play, next and previous
+    playy.addEventListener("click",()=>{
+        if(currentSong.paused){
+            currentSong.play()
+            playy.classList.remove("bi-play-circle");
+            playy.classList.add("bi-pause-circle");
+        }else{
+            currentSong.pause();
+            playy.classList.add("bi-play-circle");
+            playy.classList.remove("bi-pause-circle");
+        }
+    })
+
+
+    //Listen for time update event
+    currentSong.addEventListener("timeupdate",()=>{
+        console.log(currentSong.currentTime, currentSong.duration);
+        document.querySelector(".song-time").innerHTML=`${secToMinsec(currentSong.currentTime)}  /  ${secToMinsec(currentSong.duration)}`
+        document.querySelector(".circle").style.left=(currentSong.currentTime/ currentSong.duration) * 100 + "%";
+    })
+
+    //Add an eventListener to seekbar
+    document.querySelector(".seekbar").addEventListener("click",e=>{
+        let percent = (e.offsetX/e.target.getBoundingClientRect().width)* 100;
+        document.querySelector(".circle").style.left= percent + "%";
+        currentSong.currentTime = ((currentSong.duration) * percent)/100
+    })
 
     //play first song
     // var audio = new Audio(songs[0]);

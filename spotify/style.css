@@ -157,19 +157,29 @@ body{
     background: white;
     width: 96%;
     border-radius: 10px;
+    left: 0;
+    position: relative;
+    cursor: pointer;
     /* bottom: 500px; */
     justify-self: center;
     /* align-self: center; */
 }
 
-.seekbar .circle{
+.circle{
     /* height: 3.5px; */
     /* border: 1px solid red; */
-    bottom: 35px;
+    /* bottom: 0px; */
+    top: -3px;
     width: 13px;
     height: 13px;
-    border-radius: 7px;
+    border-radius: 50%;
     background-color: white;
     position: absolute;
+    /* transform: translate(-50%, -50%); */
     transition: left 0.5s;
+}
+
+
+.song-button  i{
+    cursor: pointer;
 }
