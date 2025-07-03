@@ -30,9 +30,59 @@
 </head>
 
 <body>
-    <div class="container-fluid p-2">
+    <div class="container-fluid">
         <div class="row d-flex justify-content-center g-3">
-            <div class="side-box col-lg-3 col-md-3">
+            <div class="offcanvas offcanvas-start custom-sidebar d-lg-none m-0" tabindex="-1" id="sidebarOffcanvas"
+                aria-labelledby="sidebarLabel">
+                <div class="offcanvas-header position-absolute">
+                    <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <!-- Sidebar content here -->
+                    <div class="home rounded mb-2 ps-1 m-0">
+                        <div class="logo fs-3 p-2"><i class="bi bi-spotify"></i> Spotify
+                        </div>
+                        <ul class="list-unstyled mb-1">
+                            <li class="p-2"><i class="bi bi-house-fill me-2"></i> Home</li>
+                            <li class="p-2"><i class="bi bi-search me-2"></i> Search</li>
+                        </ul>
+                    </div>
+                    <div class="library rounded ps-1 mb-0">
+                        <div class="heading d-flex justify-content-between align-items-center">
+                            <span class="p-2"><i class="bi bi-music-note-list me-2"></i>Your Library</span>
+                            <span class="p-2"><i class="bi bi-plus-square"></i></span>
+                        </div>
+                        <div class="songList">
+                            <ol class="list-style-number px-2">
+
+                            </ol>
+                        </div>
+                        <div class="footer d-inline-flex">
+                            <div class="pe-2"><a href="https://www.spotify.com/np-en/legal/">Legal</div>
+                            <div class="pe-2">
+                                <a href="https://www.spotify.com/np-en/safetyandprivacy/">
+                                    <span>Safety &amp; Privacy Center</span>
+                                </a>
+                            </div>
+                            <div class="pe-2"><a
+                                    href="https://www.spotify.com/np-en/legal/privacy-policy/"><span>Privacy
+                                        Policy</span></a></div>
+                            <div class="pe-2"><a
+                                    href="https://www.spotify.com/np-en/legal/cookies-policy/"><span>Cookies</span></a>
+                            </div>
+                            <div class="pe-2"><a
+                                    href="https://www.spotify.com/np-en/legal/privacy-policy/#s3"><span>About
+                                        Ads</span></a>
+                            </div>
+                            <div class="pe-2"><a
+                                    href="https://www.spotify.com/np-en/accessibility/"><span>Accessibility</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-lg-block d-none side-box col-lg-3 col-md-3 ps-0" id="">
                 <div class="home rounded mb-2 ps-1 m-0">
                     <div class="logo fs-3 p-2"><i class="bi bi-spotify"></i> Spotify
                     </div>
@@ -71,27 +121,76 @@
                     </div>
                 </div>
             </div>
-            <div class="main-box col-lg-9 col-md-9 px-0">
-                <div class="main-header d-flex justify-content-between m-0">
+            <div class="container main-box col-lg-9 col-md-12 col-sm-12 col-12 px-0">
+                <div class="main-header d-flex justify-content-between align-items-center m-0">
+                    <div class="side-button d-lg-none ms-3 fs-5" type="" data-bs-toggle="offcanvas"
+                        data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+                        <i class="bi bi-list"></i>
+                    </div>
                     <div class="fs-5 d-flex align-items-center">
                         <i class="bi bi-chevron-left"></i>
                         <i class="bi bi-chevron-right"></i>
                     </div>
                     <div class="d-flex align-items-center m-2">
                         <a href="" class="register text-decoration-none p-2 px-3">Sign Up</a>
-                        <a href="" class="login text-decoration-none text-dark bg-light p-2 px-3 mx-0 rounded-pill">Login</a>
+                        <a href=""
+                            class="login text-decoration-none text-dark bg-light p-2 px-3 mx-0 rounded-pill">Login</a>
                     </div>
                 </div>
                 <div class="spotify-playlists">
                     <h4 class="p-2 fw-bold m-2">Trending Songs</h4>
-                    <div class="container m-2">
-                        <div class="card-container row d-flex p-0">
-
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="play p-0 m-0 d-flex justify-content-center align-items-center">
-                                    <i class="bi bi-play-fill text-dark fs-3"></i>
+                    <div class="container-fluid bg-primary">
+                        <div class="card-container d-flex g-3 justify-content-center">
+                            <div class="spotify-card col-lg-2 col-md-2 col-4 m-1 p-2 bg-danger">
+                                <div class="image ratio ratio-1x1 rounded overflow-hidden bg-success">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
+                                        alt="Parki Rahexu" class="w-100 h-100">
                                 </div>
+                                <h6 class="p-2">Parkhi Rahexu</h6>
+                                <a href="#">John Rai</a>
+                            </div>
+                            <div class="spotify-card col-lg-2 col-md-2 col-4 m-1 p-2">
                                 <div class="image ratio ratio-1x1 rounded overflow-hidden">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
+                                        alt="Parki Rahexu" class="w-100 h-100">
+                                </div>
+                                <h6 class="p-2">Parkhi Rahexu</h6>
+                                <a href="#">John Rai</a>
+                            </div>
+                            <div class="spotify-card col-lg-2 col-md-2 col-4 m-1 p-2 bg-danger">
+                                <div class="image ratio ratio-1x1 rounded overflow-hidden bg-success">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
+                                        alt="Parki Rahexu" class="w-100 h-100">
+                                </div>
+                                <h6 class="p-2">Parkhi Rahexu</h6>
+                                <a href="#">John Rai</a>
+                            </div>
+                            <div class="spotify-card col-lg-2 col-md-2 col-4 m-1 p-2">
+                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
+                                        alt="Parki Rahexu" class="w-100 h-100">
+                                </div>
+                                <h6 class="p-2">Parkhi Rahexu</h6>
+                                <a href="#">John Rai</a>
+                            </div>
+                            <div class="spotify-card col-lg-2 col-md-2 col-4 m-1 p-2 bg-danger">
+                                <div class="image ratio ratio-1x1 rounded overflow-hidden bg-success">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
+                                        alt="Parki Rahexu" class="w-100 h-100">
+                                </div>
+                                <h6 class="p-2">Parkhi Rahexu</h6>
+                                <a href="#">John Rai</a>
+                            </div>
+                            <div class="spotify-card col-lg-2 col-md-2 col-4 m-1 p-2">
+                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
+                                        alt="Parki Rahexu" class="w-100 h-100">
+                                </div>
+                                <h6 class="p-2">Parkhi Rahexu</h6>
+                                <a href="#">John Rai</a>
+                            </div>
+                            <div class="spotify-card col-lg-2 col-md-2 col-4 m-1 p-2 bg-danger">
+                                <div class="image ratio ratio-1x1 rounded overflow-hidden bg-success">
                                     <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
                                         alt="Parki Rahexu" class="w-100 h-100">
                                 </div>
@@ -99,97 +198,8 @@
                                 <a href="#">John Rai</a>
                             </div>
 
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
-                                    <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
-                                        alt="Parki Rahexu" class="w-100 h-100">
-                                </div>
-                                <h6 class="p-2">Parkhi Rahexu</h6>
-                                <a href="#">John Rai</a>
-                            </div>
-                            <div class="spotify-card col-lg-2 p-2">
-                                <div class="image ratio ratio-1x1 rounded overflow-hidden">
+                            <div class="spotify-card col-lg-2 col-md-2 col-4 m-1 p-2 bg-danger">
+                                <div class="image ratio ratio-1x1 rounded overflow-hidden bg-success">
                                     <img src="https://i.scdn.co/image/ab67616d00001e02e1ac918cf9495f4792a87ff8"
                                         alt="Parki Rahexu" class="w-100 h-100">
                                 </div>
@@ -199,23 +209,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="playbar col-12 col-lg-9 position-fixed justify-content-center align-items-center">
-                        <div class="seekbar col-12 col-md-12 col-sm-12 col-lg-12 bg-primary">
-                            <div class="circle">
-                            </div>
-                        </div>
-                        <div class="songdetails d-flex justify-content-center align-items-center">
-                            <div class="song-info col-lg-3 col-4 text-start px-4">
-                        </div>
-                        <div class="song-button col-lg-6 col-4 d-flex justify-content-center">
-                            <i class="bi bi-skip-backward fs-5 m-2" id="prev"></i>
-                            <i class="bi bi-play-circle m-2 fs-5" id="playy"></i>
-                            <i class="bi bi-skip-forward fs-5 m-2" id="next"></i>
-                        </div>
-                        <div class="song-time col-lg-3 col-4 text-end px-4">    
-                        </div>
-                        </div>
+            </div>
+            <div class="play-bottom position-fixed row d-flex flex-row-reverse g-3">
+                <div class="playbar col-lg-9 ms-2 justify-content-center align-items-center ">
+                <div class="seekbar col-12 col-md-12 col-sm-12 col-lg-12">
+                    <div class="circle">
                     </div>
+                </div>
+                <div class="songdetails d-flex justify-content-center align-items-center">
+                    <div class="song-info col-lg-4 col-sm-4 col-12 text-start px-4">
+                    </div>
+                    <div class="song-button col-lg-4 col-sm-4 col-12 d-flex justify-content-center">
+                        <i class="bi bi-skip-backward fs-5 m-2" id="prev"></i>
+                        <i class="bi bi-play-circle m-2 fs-5" id="playy"></i>
+                        <i class="bi bi-skip-forward fs-5 m-2" id="next"></i>
+                    </div>
+                    <div class="song-time col-lg-4 col-sm-4 col-12 text-end px-4">
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -229,7 +241,7 @@
 
 
     <!-- script link -->
-     <script src="main.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>
