@@ -126,4 +126,16 @@ async function main() {
     // audio.play();
 }
 
+
+ const container = document.getElementById('cardContainer');
+  const scrollAmount = 300; // Adjust as needed
+
+  document.getElementById('scrollLeftBtn').addEventListener('click', () => {
+    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+  });
+
+  document.getElementById('scrollRightBtn').addEventListener('click', () => {
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  });
+
 main()
