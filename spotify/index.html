@@ -38,7 +38,7 @@
                     <button type="button" class="btn-close btn-close-white text-reset" data-bs-dismiss="offcanvas"
                         aria-label="Close"></button>
                 </div>
-                <div class="offcanvas-body">
+                <div class="offcanvas-body ps-0 p-2">
                     <!-- Sidebar content here -->
                     <div class="home rounded mb-2 ps-1 m-0">
                         <div class="logo fs-3 p-2"><i class="bi bi-spotify"></i> Spotify
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-lg-block d-none side-box col-lg-3 col-md-3 ps-0" id="">
+            <div class="d-lg-block d-none side-box col-lg-3 col-md-3 col-12 ps-0" id="">
                 <div class="home rounded mb-2 ps-1 m-0">
                     <div class="logo fs-3 p-2">
                         <i class="bi bi-spotify"></i> Spotify
@@ -116,7 +116,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container main-box col-lg-9 col-md-12 col-sm-12 col-12 px-0">
+            <div class="main-box col-lg-9 col-12 p-0">
                 <div class="main-header d-flex justify-content-between align-items-center m-0">
                     <div class="side-button d-lg-none ms-3 fs-5" type="" data-bs-toggle="offcanvas"
                         data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
@@ -129,12 +129,12 @@
                     <div class="d-flex align-items-center m-2">
                         <a href="" class="register text-decoration-none p-2 px-3">Sign Up</a>
                         <a href=""
-                            class="login text-decoration-none text-dark bg-light p-2 px-3 mx-0 rounded-pill">Login</a>
+                            class="login text-decoration-none text-dark bg-light p-2 px-3 ms-2">Login</a>
                     </div>
                 </div>
                 <div class="spotify-playlists">
                     <h4 class="p-2 fw-bold m-2">Trending Songs</h4>
-                    <div class="container-fluid">
+                    <div class="">
                         <div class="card-container d-flex g-3 align-items-center" id="cardContainer">
                             <div class="scrollLeftBtn d-flex justify-content-center align-items-center p-0 m-0"
                                 type="button" id="scrollLeftBtn">
@@ -268,19 +268,29 @@
             </div>
             <div class="play-bottom position-fixed row d-flex flex-row-reverse g-3">
                 <div class="playbar col-lg-9 ms-2 justify-content-center align-items-center">
-                    <div class="seekbar col-12 col-md-12 col-sm-12 col-lg-12">
-                        <div class="circle">
-                        </div>
-                    </div>
                     <div class="songdetails row d-flex justify-content-center align-items-center">
-                        <div class="song-info col-lg-4 col-sm-4 col-6 order-1 order-sm-1 order-lg-1 order-md-1 text-start px-4 pt-2">
+                        <div class="song-info col-lg-4 col-sm-4 col-6 order-1 order-sm-1 order-lg-1 order-md-1 text-start px-2 pt-2">
                         </div>
                         <div class="song-button col-lg-4 col-sm-4 col-12 order-3 order-sm-2 order-lg-2 order-md-2 d-flex justify-content-center">
-                            <i class="bi bi-skip-backward fs-5 m-2" id="prev"></i>
-                            <i class="bi bi-play-circle m-2 fs-5" id="playy"></i>
-                            <i class="bi bi-skip-forward fs-5 m-2" id="next"></i>
+                            <i class="bi bi-skip-backward-fill m-2" id="prev"></i>
+                            <i class="bi bi-play-circle-fill m-2" id="playy"></i>
+                            <i class="bi bi-skip-forward-fill m-2" id="next"></i>
                         </div>
-                        <div class="song-time col-lg-4 col-sm-4 col-6 order-2 order-sm-3 order-lg-3 order-md-3 text-end px-4 pt-2">
+                        <div class="song-volume col-lg-4 col-sm-4 col-6 order-2 order-sm-3 order-lg-3 order-md-3 text-end px-2 pt-2">
+                            <i class="bi bi-volume-up"></i>
+                            <input type="range" name="volume" id="">
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="song-start col-3 d-flex flex-row-reverse">
+                            02:67
+                        </div>
+                        <div class="seekbar col-6">
+                            <div class="circle">
+                            </div>
+                        </div>
+                        <div class="song-end col-3">
+                            00000
                         </div>
                     </div>
                 </div>

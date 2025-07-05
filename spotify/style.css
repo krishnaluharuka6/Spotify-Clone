@@ -43,13 +43,13 @@ body{
 .library{
     background-color: #121212;
     color: aliceblue;
-    height: 74vh;
+    height: 73vh;
     position: relative;
 }
 
 .songList ol{
     overflow-y: scroll;
-    height: 60vh;
+    height: 58vh;
     scrollbar-color: pink;
 }
 
@@ -83,6 +83,10 @@ body{
     margin-left: 3px;
 }
 
+.info div{
+    word-break: break-all;
+}
+
 
 
 .footer{
@@ -90,6 +94,7 @@ body{
     flex-wrap: wrap;
     position: absolute;
     bottom: 0;
+    background-color: #121212;
 }
 
 .footer a{
@@ -119,24 +124,40 @@ body{
     /* background-color: #1f1f1f; */
     color:#e2dede;
     font-size: 16px;
+    word-break: break-all;
 }
 
 .register:hover{
-    /* background-color: #121212; */
+    background-color: #121212;
+    border-radius: 25px;
     font-size: 17px;
     color:#fff;
     cursor: pointer;
 }
 
+.login{
+    font-size: 16px;
+    border-radius: 25px;
+    word-break: break-all;
+    
+}
+
 .login:hover{
     cursor: pointer;
     font-size: 17px;
+    border-radius: 25px;
+}
+
+
+.spotify-playlists h4{
+    font-size: clamp(14px, 2vw, 24px);
 }
 
 .card-container{
     overflow-x: scroll;
     scrollbar-width: none;
 }
+
 
 /* .card-container::-webkit-scrollbar{
     display: none;
@@ -238,7 +259,7 @@ body{
 .seekbar{
     height: 5px;
     background: white;
-    width: 96%;
+    /* width: 70%; */
     border-radius: 10px;
     left: 0;
     position: relative;
@@ -263,6 +284,14 @@ body{
 }
 
 
-.song-button  i{
+.song-button  i, .song-volume i{
     cursor: pointer;
+    font-size: 24px;
 }
+
+
+.song-info{
+    word-break: break-all;
+}
+
+

@@ -1,12 +1,13 @@
 console.log("let's do it!");
 let currentSong = new Audio();
+let songs;
 // playy=document.getElementById("playy");
 
 
 // convert the second to minutes seconds of the song
 function secToMinsec(seconds) {
     if (isNaN(seconds) || seconds < 0) {
-        return "Invalid input";
+        return "00:00";
     }
 
     const minutes = Math.floor(seconds / 60);
@@ -44,16 +45,18 @@ const playMusic = (track, pause = false) => {
     currentSong.src = "images/songs/" + track;
     if (!pause) {
         currentSong.play();
-        playy.classList.remove("bi-play-circle");
-        playy.classList.add("bi-pause-circle");
+        playy.classList.remove("bi-play-circle-fill");
+        playy.classList.add("bi-pause-circle-fill");
     }
-    document.querySelector(".song-info").innerHTML = decodeURI(track)
-    document.querySelector(".song-time").innerHTML = "00:00 / 00:00"
+    document.querySelector(".song-info").innerHTML = decodeURI(track);
+    // document.querySelector(".song-time").innerHTML = "00:00 / 00:00";
+    document.querySelector(".song-start").innerHTML ="00:00";
+    document.querySelector(".song-end").innerHTML = "00:00";
 
 }
 
 async function main() {
-    let songs = await getSongs();
+    songs = await getSongs();
     // console.log(songs); //list of songs
     playMusic(songs[0], true)
 
@@ -91,20 +94,26 @@ async function main() {
     playy.addEventListener("click", () => {
         if (currentSong.paused) {
             currentSong.play()
-            playy.classList.remove("bi-play-circle");
-            playy.classList.add("bi-pause-circle");
+            playy.classList.remove("bi-play-circle-fill");
+            playy.classList.add("bi-pause-circle-fill");
         } else {
             currentSong.pause();
-            playy.classList.add("bi-play-circle");
-            playy.classList.remove("bi-pause-circle");
+            playy.classList.add("bi-play-circle-fill");
+            playy.classList.remove("bi-pause-circle-fill");
         }
     })
 
 
     //Listen for time update event
     currentSong.addEventListener("timeupdate", () => {
-        console.log(currentSong.currentTime, currentSong.duration);
-        document.querySelector(".song-time").innerHTML = `${secToMinsec(currentSong.currentTime)}  /  ${secToMinsec(currentSong.duration)}`
+        console.log(currentSong.currentTime, 
+            
+        );
+
+        // document.querySelector(".song-time").innerHTML = `${secToMinsec(currentSong.currentTime)}  /  ${secToMinsec(currentSong.duration)}`;
+        document.querySelector(".song-start").innerHTML = `${secToMinsec(currentSong.currentTime)}`;
+        document.querySelector(".song-end").innerHTML = `${secToMinsec(currentSong.duration)}`;
+
         document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%";
     })
 
@@ -124,6 +133,34 @@ async function main() {
     }); */
 
     // audio.play();
+
+
+    // Add an event listener to prev and next
+    const prev = document.querySelector(".bi-skip-backward-fill");
+    const next= document.querySelector(".bi-skip-forward-fill");
+
+    prev.addEventListener("click",()=>{
+        console.log("Previous clicked");
+        let index=songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+        if((index-1) >= 0){
+        playMusic(songs[index-1]);
+        }
+    })
+
+    next.addEventListener("click",()=>{
+        console.log("Next clicked")
+        let index=songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+        if((index+1) < songs.length){
+        playMusic(songs[index+1]);
+        }
+    });
+
+    // Add an event to volume
+    document.querySelector(".song-volume").getElementsByTagName("input")[0].addEventListener("change",(e)=>{
+        console.log("Setting volume to",e.target.value, "/100");
+        currentSong.volume = parseInt(e.target.value)/100;
+    })
+
 }
 
 
