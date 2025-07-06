@@ -1,6 +1,7 @@
 console.log("let's do it!");
 let currentSong = new Audio();
 let songs;
+let currFolder;
 // playy=document.getElementById("playy");
 
 
@@ -20,53 +21,34 @@ function secToMinsec(seconds) {
 
 }
 
-async function getSongs() {
-    let a = await fetch("images/songs/");
+async function getSongs(folder) {
+    currFolder = folder;
+    let a = await fetch(currFolder);
     let response = await a.text();
     // console.log(response);
 
+
     let div = document.createElement("div")
     div.innerHTML = response;
+    // console.log(as);
 
     let as = div.getElementsByTagName("a");
-    let songs = []
+    //  console.log(as);
+    songs = []
+    // console.log(songs);
 
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
         if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split("/songs/")[1])
+            songs.push(element.href.split(`${currFolder}`)[1]);
         }
     }
-    return songs
-}
-
-const playMusic = (track, pause = false) => {
-    // let audio = new Audio("images/songs/" + track);
-    currentSong.src = "images/songs/" + track;
-    if (!pause) {
-        currentSong.play();
-        playy.classList.remove("bi-play-circle-fill");
-        playy.classList.add("bi-pause-circle-fill");
-    }
-    document.querySelector(".song-info").innerHTML = decodeURI(track);
-    // document.querySelector(".song-time").innerHTML = "00:00 / 00:00";
-    document.querySelector(".song-start").innerHTML ="00:00";
-    document.querySelector(".song-end").innerHTML = "00:00";
-
-}
-
-async function main() {
-    songs = await getSongs();
-    // console.log(songs); //list of songs
-    playMusic(songs[0], true)
-
-    // let songOL = document.querySelector(".songList").getElementsByTagName("ol")[0];
-
-    let allSongLists = document.querySelectorAll(".songList");
+    
+     let allSongLists = document.querySelectorAll(".songList");
 
     allSongLists.forEach(songList => {
         let songOL = songList.getElementsByTagName("ol")[0];
-
+        songOL.innerHTML = " ";
         for (const song of songs) {
             songOL.innerHTML = songOL.innerHTML + `<li>
                                 <div class="left d-flex justify-content-center">
@@ -82,13 +64,57 @@ async function main() {
     });
 
     // Attach an eventlistener to each song
-    document.querySelectorAll(".songList").forEach(songList => { Array.from(songList.getElementsByTagName("li")).forEach(e => {
-        e.addEventListener("click", element => {
-            console.log(e.querySelector(".info").firstElementChild.innerHTML);
-            playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+    document.querySelectorAll(".songList").forEach(songList => {
+        Array.from(songList.getElementsByTagName("li")).forEach(e => {
+            e.addEventListener("click", element => {
+                playMusic(e.querySelector(".info").firstElementChild.innerHTML);
+            })
         })
-    })
     });
+
+    // return songs
+}
+
+const playMusic = (track, pause = false) => {
+    // let audio = new Audio("images/songs/" + track);
+   
+    currentSong.src = `${currFolder}` + track;
+    // console.log(currentSong);
+    if (!pause) {
+        currentSong.play();
+        playy.classList.remove("bi-play-circle-fill");
+        playy.classList.add("bi-pause-circle-fill");
+    }
+    document.querySelector(".song-info").innerHTML = decodeURI(track);
+    // document.querySelector(".song-time").innerHTML = "00:00 / 00:00";
+    document.querySelector(".song-start").innerHTML = "00:00";
+    document.querySelector(".song-end").innerHTML = "00:00";
+
+}
+
+async function displayAlbums(){
+    let a = await fetch("/spotify/songs/");
+    let response = await a.text();
+    let div = document.createElement("div");
+    div.innerHTML = response;
+    let anchors = Array.from(div.querySelectorAll("a"));
+    anchors.filter(e =>{
+        console.log(e.href.includes("/spotify/songs/"));
+        if(e.href.includes("/spotify/songs/")){
+            console.log(e.href.split("/").slice(-1)[0])
+        }
+    })
+    
+}
+
+
+async function main() {
+    await getSongs("/spotify/songs/HanumanChalisa/");
+    // console.log(songs); //list of songs
+    playMusic(songs[0], true);
+
+    // Display all the albums on the page
+    displayAlbums();
 
     // Attach an event listener to play, next and previous
     playy.addEventListener("click", () => {
@@ -106,9 +132,6 @@ async function main() {
 
     //Listen for time update event
     currentSong.addEventListener("timeupdate", () => {
-        console.log(currentSong.currentTime, 
-            
-        );
 
         // document.querySelector(".song-time").innerHTML = `${secToMinsec(currentSong.currentTime)}  /  ${secToMinsec(currentSong.duration)}`;
         document.querySelector(".song-start").innerHTML = `${secToMinsec(currentSong.currentTime)}`;
@@ -137,42 +160,48 @@ async function main() {
 
     // Add an event listener to prev and next
     const prev = document.querySelector(".bi-skip-backward-fill");
-    const next= document.querySelector(".bi-skip-forward-fill");
+    const next = document.querySelector(".bi-skip-forward-fill");
 
-    prev.addEventListener("click",()=>{
-        console.log("Previous clicked");
-        let index=songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
-        if((index-1) >= 0){
-        playMusic(songs[index-1]);
+    prev.addEventListener("click", () => {
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+        if ((index - 1) >= 0) {
+            playMusic(songs[index - 1]);
         }
     })
 
-    next.addEventListener("click",()=>{
-        console.log("Next clicked")
-        let index=songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
-        if((index+1) < songs.length){
-        playMusic(songs[index+1]);
+    next.addEventListener("click", () => {
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+        if ((index + 1) < songs.length) {
+            playMusic(songs[index + 1]);
         }
     });
 
     // Add an event to volume
-    document.querySelector(".song-volume").getElementsByTagName("input")[0].addEventListener("change",(e)=>{
-        console.log("Setting volume to",e.target.value, "/100");
-        currentSong.volume = parseInt(e.target.value)/100;
+    document.querySelector(".song-volume").getElementsByTagName("input")[0].addEventListener("input", (e) => {
+        // console.log("Setting volume to", e.target.value, "/100");
+        currentSong.volume = parseInt(e.target.value) / 100;
+    })
+
+
+    // load the playlist whenever card is clicked;
+    Array.from(document.getElementsByClassName("card")).forEach(e => {
+        e.addEventListener("click",async item =>{
+            songs = await getSongs(`/spotify/songs/${item.currentTarget.dataset.folder}/`);
+        })
     })
 
 }
 
 
- const container = document.getElementById('cardContainer');
-  const scrollAmount = 300; // Adjust as needed
+const container = document.getElementById('cardContainer');
+const scrollAmount = 300; // Adjust as needed
 
-  document.getElementById('scrollLeftBtn').addEventListener('click', () => {
+document.getElementById('scrollLeftBtn').addEventListener('click', () => {
     container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-  });
+});
 
-  document.getElementById('scrollRightBtn').addEventListener('click', () => {
+document.getElementById('scrollRightBtn').addEventListener('click', () => {
     container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  });
+});
 
 main()
