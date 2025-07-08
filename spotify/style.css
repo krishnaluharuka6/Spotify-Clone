@@ -296,10 +296,12 @@ body{
 }
 
 
-.song-button  i, .song-volume i{
+.song-button  i, .song-volume i, .song-volume input{
     cursor: pointer;
     font-size: 24px;
 }
+
+
 
 
 .song-info{

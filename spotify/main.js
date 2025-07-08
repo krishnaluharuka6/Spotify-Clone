@@ -214,8 +214,25 @@ async function main() {
 
     // Add an event to volume
     document.querySelector(".song-volume").getElementsByTagName("input")[0].addEventListener("input", (e) => {
-        // console.log("Setting volume to", e.target.value, "/100");
+         console.log("Setting volume to", ((e.target.value)/100), "/100");
         currentSong.volume = parseInt(e.target.value) / 100;
+    })
+
+
+
+    // Add eventlistener to mute the track
+    const vol = document.querySelector(".song-volume i");
+    vol.addEventListener("click",function(e){
+        vol.classList.toggle("bi-volume-mute");
+        if(vol.classList.contains("bi-volume-mute")){
+            currentSong.volume = 0;
+            document.querySelector(".song-volume").getElementsByTagName("input")[0].value = 0;
+        }
+        vol.classList.toggle("bi-volume-up")
+        if(vol.classList.contains("bi-volume-up")){
+            currentSong.volume = 0.50;
+            document.querySelector(".song-volume").getElementsByTagName("input")[0].value = 50;
+        }
     })
 
 }
