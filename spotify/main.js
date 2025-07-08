@@ -43,8 +43,8 @@ async function getSongs(folder) {
             songs.push(element.href.split(`${currFolder}`)[1]);
         }
     }
-    
-     let allSongLists = document.querySelectorAll(".songList");
+
+    let allSongLists = document.querySelectorAll(".songList");
 
     allSongLists.forEach(songList => {
         let songOL = songList.getElementsByTagName("ol")[0];
@@ -77,7 +77,7 @@ async function getSongs(folder) {
 
 const playMusic = (track, pause = false) => {
     // let audio = new Audio("images/songs/" + track);
-   
+
     currentSong.src = `${currFolder}` + track;
     // console.log(currentSong);
     if (!pause) {
@@ -92,21 +92,55 @@ const playMusic = (track, pause = false) => {
 
 }
 
-async function displayAlbums(){
+async function displayAlbums() {
     let a = await fetch("/spotify/songs/");
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
     let anchors = div.getElementsByTagName("a");
-    Array.from(anchors).forEach(async e =>{
-        // console.log(e.href.includes("/spotify/songs/"));
-        if(e.href.includes("/spotify/songs/")){
+    let cardContainer = document.querySelector(".card-container");
+    let array = Array.from(anchors);
+    for (let index = 0; index < array.length; index++) {
+        const e = array[index];
+
+        if (e.href.includes("/spotify/songs/")) {
+            console.log(e.href);
             let folder = e.href.split("/").slice(-1)[0];
+            // get metadata of the folder
             let a = await fetch(`/spotify/songs/${folder}/info.json`);
             let response = await a.json();
             console.log(response);
+            cardContainer.innerHTML = cardContainer.innerHTML + `<div class="spotify-card card col-lg-2 col-md-3 col-sm-3 col-4 me-1 p-2" data-folder="${folder}">
+            <div class="play p-0 m-0 d-flex align-items-center justify-content-center">
+                <i class="bi bi-play-fill p-0 m-0"></i>
+            </div>
+            <div class="image rounded overflow-hidden">
+                <img src="/spotify/songs/${folder}/cover.jpeg" alt="${folder}" class="w-100 h-100">
+            </div>
+            <div class="card-body p-0">
+                <h6 class="card-title p-1 mb-0">${response.title}</h6>
+                <p class="card-text text-secondary pb-1">${response.description}</p>
+            </div>
+            </div>`;
         }
-    })    
+    }
+
+    // load the playlist whenever card is clicked;
+    Array.from(document.getElementsByClassName("card")).forEach(e => {
+        e.addEventListener("click", async item => {
+            songs = await getSongs(`/spotify/songs/${item.currentTarget.dataset.folder}/`);
+        })
+    })
+
+    const scrollAmount = 300; // Adjust as needed
+
+    document.getElementById('scrollLeftBtn').addEventListener('click', () => {
+        cardContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+
+    document.getElementById('scrollRightBtn').addEventListener('click', () => {
+        cardContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
 }
 
 
@@ -184,26 +218,6 @@ async function main() {
         currentSong.volume = parseInt(e.target.value) / 100;
     })
 
-
-    // load the playlist whenever card is clicked;
-    Array.from(document.getElementsByClassName("card")).forEach(e => {
-        e.addEventListener("click",async item =>{
-            songs = await getSongs(`/spotify/songs/${item.currentTarget.dataset.folder}/`);
-        })
-    })
-
 }
-
-
-const container = document.getElementById('cardContainer');
-const scrollAmount = 300; // Adjust as needed
-
-document.getElementById('scrollLeftBtn').addEventListener('click', () => {
-    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-});
-
-document.getElementById('scrollRightBtn').addEventListener('click', () => {
-    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-});
 
 main()

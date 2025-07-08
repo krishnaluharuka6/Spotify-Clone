@@ -178,9 +178,20 @@ body{
 
 .spotify-card .image img{
     border-radius: 10px;
-    min-width: 100px;
-    min-height: 10px;
+    min-width: 162px;
+    min-height: 162px;
+     max-width: 162px;
+    max-height: 162px;
     object-fit: cover;
+}
+
+.spotify-card .card-body{
+    height: 50px;
+}
+
+.spotify-card .card-body p{
+    font-size: 12px;
+    
 }
 
 .scrollLeftBtn{
@@ -279,6 +290,7 @@ body{
     border-radius: 50%;
     background-color: white;
     position: absolute;
+    left: 1px;
     /* transform: translate(-50%, -50%); */
     transition: left 0.5s;
 }
