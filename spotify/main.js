@@ -34,7 +34,7 @@ async function getSongs(folder) {
 
     let as = div.getElementsByTagName("a");
     //  console.log(as);
-    songs = []
+    songs = [];
     // console.log(songs);
 
     for (let index = 0; index < as.length; index++) {
@@ -72,7 +72,7 @@ async function getSongs(folder) {
         })
     });
 
-    // return songs
+    return songs
 }
 
 const playMusic = (track, pause = false) => {
@@ -129,6 +129,8 @@ async function displayAlbums() {
     Array.from(document.getElementsByClassName("card")).forEach(e => {
         e.addEventListener("click", async item => {
             songs = await getSongs(`/spotify/songs/${item.currentTarget.dataset.folder}/`);
+            console.log(songs);
+            playMusic(songs[0]);
         })
     })
 
@@ -200,12 +202,15 @@ async function main() {
 
     prev.addEventListener("click", () => {
         let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+        console.log(currentSong.src.split("/").slice(-1)[0]);
         if ((index - 1) >= 0) {
             playMusic(songs[index - 1]);
         }
     })
 
     next.addEventListener("click", () => {
+        console.log(songs);
+        console.log(currentSong.src.split("/").slice(-1)[0]);
         let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
         if ((index + 1) < songs.length) {
             playMusic(songs[index + 1]);
