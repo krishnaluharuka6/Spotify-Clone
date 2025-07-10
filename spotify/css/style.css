@@ -106,6 +106,9 @@ body{
 .main-box{
     background-color: #121212;
     border-radius: 5px;
+    height: 96vh;
+    overflow-y: scroll;
+    padding-bottom: 80px;
 }
 
 .main-header{
@@ -153,9 +156,16 @@ body{
     font-size: clamp(14px, 2vw, 24px);
 }
 
+.cards-here{
+    position: relative;
+}
+
 .card-container{
     overflow-x: scroll;
     scrollbar-width: none;
+    scroll-behavior: smooth;
+    position: relative;
+    overflow-y: hidden;
 }
 
 
@@ -199,6 +209,8 @@ body{
     position: absolute;
     width: 40px;
     height: 40px;
+    top: 100px;
+    left: 5px;
     border-radius: 50%;
     opacity: 0;
 }
@@ -208,7 +220,8 @@ body{
     position: absolute;
     width: 40px;
     height: 40px;
-    right: 25px;
+    top: 100px;
+    right: 5px;
     border-radius: 50%;
     opacity: 0;
 }
@@ -222,7 +235,7 @@ body{
     background-color: #1f1f1f;
 }
 
-.card-container:hover .scrollLeftBtn, .card-container:hover .scrollRightBtn{
+.cards-here:hover .scrollLeftBtn, .cards-here:hover .scrollRightBtn{
     opacity: 1;
 }
 
