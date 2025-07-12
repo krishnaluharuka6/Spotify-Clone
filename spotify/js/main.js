@@ -73,7 +73,7 @@ async function getSongs(folder) {
     });
 
     return songs
-} 
+}
 
 /* const playMusic = (track, pause = false) => {
     // let audio = new Audio("images/songs/" + track);
@@ -150,7 +150,7 @@ async function getSongs(folder) {
 //     });
 //     });
 
-    
+
 //     const right = document.querySelectorAll('.scrollRightBtn');
 
 //     Array.from(right).forEach(element => {
@@ -169,69 +169,107 @@ async function getSongs(folder) {
 
 async function displayAlbums(folder) {
     currFolder = folder;
-    let a = await fetch(currFolder);
-    let response = await a.text();
-    // console.log(response);
-    let div = document.createElement("div");
-    div.innerHTML = response;
-    console.log(div);
+    let currFolderName = currFolder.split("/").slice(-2)[0];
+    console.log(currFolderName);
 
-    let spotifyList = Array.from(document.querySelectorAll(".spotify-playlists"));
+    let spotifyList = document.createElement("div");
+    spotifyList.className = "spotify-playlists";
+    let mainBox = document.querySelector('.main-box');
+    mainBox.appendChild(spotifyList);
     console.log(spotifyList);
 
-    let anchors = div.getElementsByTagName("a");
-    let cardContainer = document.querySelector(".card-container");
-    let array = Array.from(anchors);
+    let a1 = await fetch(currFolder);
+    let response1 = await a1.text();
+    // console.log(response);
 
+    let div1 = document.createElement("div");
+    div1.innerHTML = response1;
+    console.log(div1);
 
-    spotifyList.forEach(async e => {
-        e.innerHTML = e.innerHTML + `<h4 class="p-2 fw-bold m-2">${currFolder}</h4>
+    let anchors1 = div1.getElementsByTagName("a");
+    let array1 = Array.from(anchors1);
+    console.log(array1);
+
+    for (let i = 0; i < array1.length; i++) {
+        const e1 = array1[i];
+        // console.log(e.href.includes(currFolder));
+
+        if (e1.href.includes(currFolder)) {
+            console.log(e1.href);
+            let folder = e1.href.split("/").slice(-1)[0];
+            console.log(folder);
+            // get metadata of the folder
+            // let a = await fetch(`${currFolder}${folder}/info.json`);
+            // let response = await a.json();
+            // console.log(response);
+            spotifyList.innerHTML = spotifyList.innerHTML + `<h4 class="p-2 fw-bold m-2">${folder}</h4>
                     <div class="cards-here">
                         <div class="scrollLeftBtn d-flex justify-content-center align-items-center p-0 m-0"
                                 type="button" id="scrollLeftBtn">
                                 <i class="bi bi-chevron-left fw-bold fs-4"></i>
-                            </div><div class="card-container d-flex g-3 align-items-center ps-3" id="cardContainer">`;
+                            </div>
 
-        let anchors = div.getElementsByTagName("a");
-    let cardContainer = document.querySelector(".card-container");
-    let array = Array.from(anchors);
-
-    for (let index = 0; index < array.length; index++) {
-        const e = array[index];
-
-        if (e.href.includes("/spotify/songs/")) {
-            console.log(e.href);
-            let folder = e.href.split("/").slice(-1)[0];
-            // get metadata of the folder
-            let a = await fetch(`/spotify/songs/${folder}/info.json`);
-            let response = await a.json();
-            console.log(response);
-            cardContainer.innerHTML = cardContainer.innerHTML + `<div class="spotify-card card col-lg-2 col-md-3 col-sm-3 col-4 me-1 p-2" data-folder="${folder}">
-            <div class="play p-0 m-0 d-flex align-items-center justify-content-center">
-                <i class="bi bi-play-fill p-0 m-0"></i>
-            </div>
-            <div class="image rounded overflow-hidden">
-                <img src="/spotify/songs/${folder}/cover.jpeg" alt="${folder}" class="w-100 h-100">
-            </div>
-            <div class="card-body p-0">
-                <h6 class="card-title p-1 mb-0">${response.title}</h6>
-                <p class="card-text text-secondary pb-1">${response.description}</p>
-            </div>
-            </div>`;
-        }
-    }
-                        
+                             <div class="card-container d-flex g-3 align-items-center ps-3" id="cardContainer">
+                             </div>
                             
-    e. innerHTML = e.innerHTML +            `</div>
-                        <div class="scrollRightBtn d-flex justify-content-center align-items-center p-0 m-0"
+                            <div class="scrollRightBtn d-flex justify-content-center align-items-center p-0 m-0"
                                 type="button" id="scrollRightBtn">
                                 <i class="bi bi-chevron-right fw-bold fs-4"></i>
                             </div>
-                    </div>`
-    });
+                    </div>
+                </div>`;
 
-    
-    
+
+
+
+            let a = await fetch(`/spotify/songs/${folder}/`);
+            console.log(a);
+            let response = await a.text();
+            // console.log(response)
+            let div = document.createElement("div");
+            div.innerHTML = response;
+            console.log(div);
+            let anchors = div.getElementsByTagName("a");
+
+            let array = Array.from(anchors);
+            console.log(array);
+
+            for (let index = 0; index < array.length; index++) {
+                const e = array[index];
+                console.log(e);
+
+                if (e.href.includes(`/spotify/songs/${folder}/`)) {
+                    console.log(e.href);
+                    let subfolder = e.href.split("/").slice(-1)[0];
+                    console.log(subfolder)
+                    // get metadata of the folder
+                    let a = await fetch(`/spotify/songs/${folder}/${subfolder}/info.json`);
+                    let response = await a.json();
+                    console.log(response);
+
+                    let cards = document.querySelectorAll(".card-container");
+                    console.log(Array.from(cards))
+                    Array.from(cards).forEach((card) => {
+                        let cardContainer = card.closest(".cards-here").querySelector(".card-container");
+                        console.log(cardContainer);
+
+                        cardContainer.innerHTML = cardContainer.innerHTML + `<div class="spotify-card card col-lg-2 col-md-3 col-sm-3 col-4 me-1 p-2" data-folder="${subfolder}">
+                            <div class="play p-0 m-0 d-flex align-items-center justify-content-center">
+                                <i class="bi bi-play-fill p-0 m-0"></i>
+                            </div>
+                            <div class="image rounded overflow-hidden">
+                                <img src="/spotify/songs/${folder}/${subfolder}/cover.jpeg" alt="${subfolder}" class="w-100 h-100">
+                            </div>
+                            <div class="card-body p-0">
+                                <h6 class="card-title p-1 mb-0">${response.title}</h6>
+                                <p class="card-text text-secondary pb-1">${response.description}</p>
+                            </div>
+                            </div>`;
+                    })
+                }
+            }
+        }
+    }
 
     // load the playlist whenever card is clicked;
     Array.from(document.getElementsByClassName("card")).forEach(e => {
@@ -248,29 +286,29 @@ async function displayAlbums(folder) {
 
     Array.from(left).forEach(element => {
         console.log(element);
-        element.addEventListener('click', () => {       
-        // cardContainer.forEach(e =>{
-        //     e.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        // })
+        element.addEventListener('click', () => {
+            // cardContainer.forEach(e =>{
+            //     e.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            // })
 
-        const container = element.closest('.cards-here').querySelector('.card-container');
-        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    });
+            const container = element.closest('.cards-here').querySelector('.card-container');
+            container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
     });
 
-    
+
     const right = document.querySelectorAll('.scrollRightBtn');
 
     Array.from(right).forEach(element => {
-        console.log(element);
+        // console.log(element);
         element.addEventListener('click', () => {
-        //     cardContainer.forEach(e =>{
-        //     e.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        // })
+            //     cardContainer.forEach(e =>{
+            //     e.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            // })
 
-        const container = element.closest('.cards-here').querySelector('.card-container');
-        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    });
+            const container = element.closest('.cards-here').querySelector('.card-container');
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
     });
 }
 
@@ -281,7 +319,7 @@ async function main() {
     // playMusic(songs[0], true);
 
     // Display all the albums on the page
-    displayAlbums("/spotify/songs/bhajan/");
+    displayAlbums("/spotify/songs/");
 
     // Attach an event listener to play, next and previous
     playy.addEventListener("click", () => {
@@ -345,7 +383,7 @@ async function main() {
 
     // Add an event to volume
     document.querySelector(".song-volume").getElementsByTagName("input")[0].addEventListener("input", (e) => {
-         console.log("Setting volume to", ((e.target.value)/100), "/100");
+        console.log("Setting volume to", ((e.target.value) / 100), "/100");
         currentSong.volume = parseInt(e.target.value) / 100;
     })
 
@@ -353,14 +391,14 @@ async function main() {
 
     // Add eventlistener to mute the track
     const vol = document.querySelector(".song-volume i");
-    vol.addEventListener("click",function(e){
+    vol.addEventListener("click", function (e) {
         vol.classList.toggle("bi-volume-mute");
-        if(vol.classList.contains("bi-volume-mute")){
+        if (vol.classList.contains("bi-volume-mute")) {
             currentSong.volume = 0;
             document.querySelector(".song-volume").getElementsByTagName("input")[0].value = 0;
         }
         vol.classList.toggle("bi-volume-up")
-        if(vol.classList.contains("bi-volume-up")){
+        if (vol.classList.contains("bi-volume-up")) {
             currentSong.volume = 0.50;
             document.querySelector(".song-volume").getElementsByTagName("input")[0].value = 50;
         }
