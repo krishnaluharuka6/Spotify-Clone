@@ -1,4 +1,4 @@
-This Spotify UI clone is responsive and user-friendly. The user can play songs of there choice saved in various folders... It can be used by backend developer beginner as an template.
+This Spotify UI clone is responsive and user-friendly. The user can play songs of there choice saved in various folders... 
 
 
 
