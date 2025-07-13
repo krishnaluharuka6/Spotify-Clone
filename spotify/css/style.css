@@ -111,6 +111,18 @@ body{
     padding-bottom: 80px;
 }
 
+
+.main-box::-webkit-scrollbar{
+    width: 6px;
+}
+
+.main-box::-webkit-scrollbar-thumb{
+    background: gray;
+    border-radius: 10px;
+}
+
+
+
 .main-header{
     background: rgb(34,34,34);
     height: 50px;
@@ -158,6 +170,7 @@ body{
 
 .cards-here{
     position: relative;
+    padding: 0 25px 0 10px;
 }
 
 .card-container{

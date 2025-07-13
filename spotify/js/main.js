@@ -6,7 +6,7 @@ let currFolder;
 
 
 // convert the second to minutes seconds of the song
-/* function secToMinsec(seconds) {
+function secToMinsec(seconds) {
     if (isNaN(seconds) || seconds < 0) {
         return "00:00";
     }
@@ -19,7 +19,7 @@ let currFolder;
 
     return `${formattedMinutes}:${formattedSeconds}`;
 
-} */
+} 
 
 async function getSongs(folder) {
     currFolder = folder;
@@ -75,7 +75,7 @@ async function getSongs(folder) {
     return songs
 }
 
-/* const playMusic = (track, pause = false) => {
+const playMusic = (track, pause = false) => {
     // let audio = new Audio("images/songs/" + track);
 
     currentSong.src = `${currFolder}` + track;
@@ -90,7 +90,7 @@ async function getSongs(folder) {
     document.querySelector(".song-start").innerHTML = "00:00";
     document.querySelector(".song-end").innerHTML = "00:00";
 
-} */
+}
 
 // async function displayAlbums() {
 //     let a = await fetch("/spotify/songs/");
@@ -195,92 +195,90 @@ async function displayAlbums(folder) {
         // console.log(e.href.includes(currFolder));
 
         if (e1.href.includes(currFolder)) {
-            console.log(e1.href);
             let folder = e1.href.split("/").slice(-1)[0];
-            console.log(folder);
-            // get metadata of the folder
-            // let a = await fetch(`${currFolder}${folder}/info.json`);
-            // let response = await a.json();
-            // console.log(response);
-            spotifyList.innerHTML = spotifyList.innerHTML + `<h4 class="p-2 fw-bold m-2">${folder}</h4>
-                    <div class="cards-here">
-                        <div class="scrollLeftBtn d-flex justify-content-center align-items-center p-0 m-0"
-                                type="button" id="scrollLeftBtn">
-                                <i class="bi bi-chevron-left fw-bold fs-4"></i>
-                            </div>
 
-                             <div class="card-container d-flex g-3 align-items-center ps-3" id="cardContainer">
-                             </div>
-                            
-                            <div class="scrollRightBtn d-flex justify-content-center align-items-center p-0 m-0"
-                                type="button" id="scrollRightBtn">
-                                <i class="bi bi-chevron-right fw-bold fs-4"></i>
-                            </div>
-                    </div>
-                </div>`;
+            // STEP 1: Create a fresh playlist section for this category
+            let spotifyList = document.createElement("div");
+            spotifyList.className = "spotify-playlists";
+            spotifyList.innerHTML = `
+        <h4 class="p-2 fw-bold m-2">${folder.charAt(0).toUpperCase()+ folder.slice(1).replaceAll("%20", " ")}</h4>
+        <div class="cards-here">
+            <div class="scrollLeftBtn d-flex justify-content-center align-items-center p-0 m-0"
+                type="button">
+                <i class="bi bi-chevron-left fw-bold fs-4"></i>
+            </div>
 
+            <div class="card-container d-flex g-3 align-items-center ps-3"></div>
 
+            <div class="scrollRightBtn d-flex justify-content-center align-items-center p-0 m-0"
+                type="button">
+                <i class="bi bi-chevron-right fw-bold fs-4"></i>
+            </div>
+        </div>
+    `;
+            document.querySelector(".main-box").appendChild(spotifyList);
 
-
+            // STEP 2: Get subfolders (each song folder inside this category)
             let a = await fetch(`/spotify/songs/${folder}/`);
-            console.log(a);
             let response = await a.text();
-            // console.log(response)
             let div = document.createElement("div");
             div.innerHTML = response;
-            console.log(div);
             let anchors = div.getElementsByTagName("a");
 
-            let array = Array.from(anchors);
-            console.log(array);
-
-            for (let index = 0; index < array.length; index++) {
-                const e = array[index];
-                console.log(e);
+            for (let index = 0; index < anchors.length; index++) {
+                const e = anchors[index];
 
                 if (e.href.includes(`/spotify/songs/${folder}/`)) {
-                    console.log(e.href);
                     let subfolder = e.href.split("/").slice(-1)[0];
-                    console.log(subfolder)
-                    // get metadata of the folder
-                    let a = await fetch(`/spotify/songs/${folder}/${subfolder}/info.json`);
-                    let response = await a.json();
-                    console.log(response);
 
-                    let cards = document.querySelectorAll(".card-container");
-                    console.log(Array.from(cards))
-                    Array.from(cards).forEach((card) => {
-                        let cardContainer = card.closest(".cards-here").querySelector(".card-container");
-                        console.log(cardContainer);
+                    // STEP 3: Fetch song metadata
+                    try {
+                        let res = await fetch(`/spotify/songs/${folder}/${subfolder}/info.json`);
+                        let meta = await res.json();
 
-                        cardContainer.innerHTML = cardContainer.innerHTML + `<div class="spotify-card card col-lg-2 col-md-3 col-sm-3 col-4 me-1 p-2" data-folder="${subfolder}">
-                            <div class="play p-0 m-0 d-flex align-items-center justify-content-center">
-                                <i class="bi bi-play-fill p-0 m-0"></i>
-                            </div>
-                            <div class="image rounded overflow-hidden">
-                                <img src="/spotify/songs/${folder}/${subfolder}/cover.jpeg" alt="${subfolder}" class="w-100 h-100">
-                            </div>
-                            <div class="card-body p-0">
-                                <h6 class="card-title p-1 mb-0">${response.title}</h6>
-                                <p class="card-text text-secondary pb-1">${response.description}</p>
-                            </div>
-                            </div>`;
-                    })
+                        // STEP 4: Add this song card to THIS folder's card-container
+                        let cardContainer = spotifyList.querySelector(".card-container");
+
+                        let card = document.createElement("div");
+                        card.className = "spotify-card card col-lg-2 col-md-3 col-sm-3 col-4 me-1 p-2";
+                        card.dataset.folder = `${folder}/${subfolder}`;
+                        card.innerHTML = `
+                    <div class="play p-0 m-0 d-flex align-items-center justify-content-center">
+                        <i class="bi bi-play-fill p-0 m-0"></i>
+                    </div>
+                    <div class="image rounded overflow-hidden">
+                        <img src="/spotify/songs/${folder}/${subfolder}/cover.jpeg" alt="${subfolder}" class="w-100 h-100">
+                    </div>
+                    <div class="card-body p-0">
+                        <h6 class="card-title p-1 mb-0">${meta.title}</h6>
+                        <p class="card-text text-secondary pb-1">${meta.description}</p>
+                    </div>
+                `;
+                        card.addEventListener("click", async () => {
+                            let songs = await getSongs(`/spotify/songs/${folder}/${subfolder}/`);
+                            playMusic(songs[0]);
+                        });
+
+                        cardContainer.appendChild(card);
+                    } catch (err) {
+                        console.warn("Missing or broken info.json in:", subfolder);
+                    }
                 }
             }
         }
     }
 
+
     // load the playlist whenever card is clicked;
-    Array.from(document.getElementsByClassName("card")).forEach(e => {
-        e.addEventListener("click", async item => {
-            songs = await getSongs(`/spotify/songs/${item.currentTarget.dataset.folder}/`);
-            playMusic(songs[0]);
-        })
-    })
+    // Array.from(document.getElementsByClassName("card")).forEach(e => {
+    //     e.addEventListener("click", async item => {
+    //         songs = await getSongs(`/spotify/songs/${item.currentTarget.dataset.folder}/`);
+    //         playMusic(songs[0]);
+    //     })
+    // })
 
     const scrollAmount = 300; // Adjust as needed
-    cardContainer = Array.from(document.querySelectorAll(".card-container"));
+    let cardContainer = Array.from(document.querySelectorAll(".card-container"));
 
     const left = document.querySelectorAll('.scrollLeftBtn');
 
@@ -314,9 +312,9 @@ async function displayAlbums(folder) {
 
 
 async function main() {
-    // await getSongs("/spotify/songs/HanumanChalisa/");
+    await getSongs("/spotify/songs/bhajan/Sunderkand/");
     // console.log(songs); //list of songs
-    // playMusic(songs[0], true);
+    playMusic(songs[0], true);
 
     // Display all the albums on the page
     displayAlbums("/spotify/songs/");
